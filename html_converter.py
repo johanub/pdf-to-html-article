@@ -24,10 +24,12 @@ test_endheader = """
 </div>
 <style>
     h1 {
-        margin-top: 15px
+        margin-top: 15px;
+        font-size: 30px
     }
     h2 {
-        margin-top: 15px
+        margin-top: 15px;
+        font-size: 30px
     }
 </style>
 </body>
