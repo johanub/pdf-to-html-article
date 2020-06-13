@@ -67,7 +67,7 @@ class HtmlConverter:
             prev_line = html_line
 
         with open(export_path, 'w') as f:
-            f.write(test_header + html.replace('\n\n\n', '\n').replace('\n\n', '\n') + test_endheader)
+            f.write(test_header + html + test_endheader)
 
         # if line.find('a'):
         #     html_line = \
