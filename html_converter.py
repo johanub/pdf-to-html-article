@@ -1,4 +1,5 @@
 import os
+import base64
 
 test_header = """
 <html lang="da">
@@ -15,7 +16,7 @@ test_header = """
 </head>
 <body>
 <div class="row justify-content-center">
-    <div class="col-7" style="white-space: pre-wrap;">"""
+    <div class="col-5" style="white-space: pre-wrap;max-width:800px;word-wrap: break-word">"""
 
 test_endheader = """
 
@@ -44,6 +45,8 @@ class HtmlConverter:
         self.xml_root = self._convert2xml()
 
     def export_html(self, export_path):
+        pics = self.get_b64_imgs()
+
         fonts = self.get_fonts()
         html = ''
         prev_line = ''
@@ -51,40 +54,68 @@ class HtmlConverter:
             html_line = ''
             line_text = ''
 
+            for img in pics:
+                if not img['used']:
+                    if int(line.attrib['top']) > int(img['top']):
+                        html += '<img src="{}" style="width: {};height: {}">'\
+                            .format(img['src'], img['width'], img['height']) + '\n'
+                        img['used'] = True
+
             for text in line.itertext():
                 line_text += text
 
             if not str(line_text).strip():
-                html_line += '\n'
-                html += html_line
-                prev_line += html_line
+                if prev_line != '\n\n\n':
+                    html_line += '\n'
+                    html += html_line
+                    if '\n' in prev_line:
+                        prev_line += html_line
+                    else:
+                        prev_line = html_line
                 continue
 
-            html_line = fonts[line.attrib['font']]['tag']
-            html_line += line_text
+            html_line += fonts[line.attrib['font']]['tag']
+            subelem = list(line)
+            if subelem:
+                if subelem[0].tag == 'a':
+                    if not subelem[0].attrib['href'].startswith(export_path):
+                        html_line += \
+                            """<a href="{}">{}</a>""".format(subelem[0].attrib['href'], line_text)
+                    else:
+                        html_line += line_text
+                elif subelem[0].tag == 'b':
+                    html_line += \
+                        """<b>{}</b>""".format(line_text)
+                elif subelem[0].tag == 'i':
+                    html_line += \
+                        """<i>{}</i>""".format(line_text)
+            else:
+                html_line += line_text
             html_line += fonts[line.attrib['font']]['endtag']
+
             html += html_line
             prev_line = html_line
 
         with open(export_path, 'w') as f:
-            f.write(test_header + html + test_endheader)
-
-        # if line.find('a'):
-        #     html_line = \
-        #         """<a href="{0.attrib['href']}">{0.text}</a>""".format(line.find('a'))
-        # if line.find('b'):
-        #     html_line = \
-        #         """<b>{0.text}</b>""".format(line.find('b'))
-        # if line.find('i'):
-        #     html_line = \
-        #         """<i>{0.text}</i>""".format(line.find('i'))
+            f.write(test_header + html.strip() + test_endheader)
 
     def get_fonts(self):
         from font_config import font_parser
         return font_parser(self.xml_root)
 
-    def get_b64_img(self):
-        pass
+    def get_b64_imgs(self):
+        imgs = self.xml_root.iter('image')
+        exptimgs = []
+        for img in imgs:
+            with open(img.attrib['src'], 'rb') as f:
+                ext = img.attrib['src'].split('.')[-1]
+                prefix = f'data:image/{ext};base64,'
+                exptimgs.append({'height': img.attrib['height'],
+                                 'width': img.attrib['width'],
+                                 'top': img.attrib['top'],
+                                 'src': prefix + base64.b64encode(f.read()).decode('utf-8'),
+                                 'used': False})
+        return exptimgs
 
     def _convert2xml(self):
         import xml.etree.ElementTree as ET

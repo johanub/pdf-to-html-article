@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2ec26ae8-a09a-4c69-bd3f-20ad3069d75b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/font_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/font_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/html_converter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1dGU3R1WnHht3x4bogqsIy5oSaN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2ec26ae8-a09a-4c69-bd3f-20ad3069d75b" name="Default Changelist" comment="" />
+      <created>1592050724002</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592050724002</updated>
+      <workItem from="1592050725613" duration="111000" />
+      <workItem from="1592050913307" duration="1691000" />
+      <workItem from="1592560594521" duration="6178000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1295" y="-403" width="670" height="676" key="search.everywhere.popup" timestamp="1592565928449">
+      <screen x="-1920" y="-638" width="1920" height="1057" />
+    </state>
+    <state x="-1295" y="-403" width="670" height="676" key="search.everywhere.popup/-1920.-638.1920.1057/0.23.1792.1097@-1920.-638.1920.1057" timestamp="1592565928449" />
+  </component>
+</project>
