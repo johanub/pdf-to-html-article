@@ -57,8 +57,8 @@ class HtmlConverter:
             for img in pics:
                 if not img['used']:
                     if int(line.attrib['top']) > int(img['top']):
-                        html += '<img src="{}" style="width: {};height: {}">'\
-                            .format(img['src'], img['width'], img['height']) + '\n'
+                        html += '<img src="{}" style="width: {}">'\
+                            .format(img['src'], '100%') + '\n'
                         img['used'] = True
 
             for text in line.itertext():

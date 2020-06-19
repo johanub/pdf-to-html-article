@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ec26ae8-a09a-4c69-bd3f-20ad3069d75b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/font_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/font_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/html_converter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
@@ -38,7 +37,7 @@
       <updated>1592050724002</updated>
       <workItem from="1592050725613" duration="111000" />
       <workItem from="1592050913307" duration="1691000" />
-      <workItem from="1592560594521" duration="6178000" />
+      <workItem from="1592560594521" duration="6523000" />
     </task>
     <servers />
   </component>
