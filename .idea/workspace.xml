@@ -2,6 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ec26ae8-a09a-4c69-bd3f-20ad3069d75b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/biologi.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dho-1_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dho.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dho2-1_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dho2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dho2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/font_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/font_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/html_converter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
@@ -25,6 +33,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -38,6 +51,7 @@
       <workItem from="1592050725613" duration="111000" />
       <workItem from="1592050913307" duration="1691000" />
       <workItem from="1592560594521" duration="6523000" />
+      <workItem from="1592568734231" duration="2616000" />
     </task>
     <servers />
   </component>

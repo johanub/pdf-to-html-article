@@ -50,54 +50,57 @@ class HtmlConverter:
         fonts = self.get_fonts()
         html = ''
         prev_line = ''
-        for line in self.xml_root.iter('text'):
-            html_line = ''
-            line_text = ''
+        for page in self.xml_root.iter('page'):
+            for line in page.iter('text'):
+                html_line = ''
+                line_text = ''
 
-            for img in pics:
-                if not img['used']:
-                    if int(line.attrib['top']) > int(img['top']):
-                        html += '<img src="{}" style="width: {}">'\
-                            .format(img['src'], '100%') + '\n'
-                        img['used'] = True
+                for img in pics:
+                    if not img['used']:
+                        if int(page.attrib['number']) == int(img['page']):
+                            if int(line.attrib['top']) > int(img['top']):
+                                html += '<img src="{}" style="width: {}px;height: {}px">'\
+                                    .format(img['src'], img['width'], img['height']) + '\n'
+                                img['used'] = True
 
-            for text in line.itertext():
-                line_text += text
+                for text in line.itertext():
+                    line_text += text
 
-            if not str(line_text).strip():
-                if prev_line != '\n\n\n':
-                    html_line += '\n'
-                    html += html_line
-                    if '\n' in prev_line:
-                        prev_line += html_line
-                    else:
-                        prev_line = html_line
-                continue
+                if not str(line_text).strip():
+                    if prev_line != '\n\n':
+                        html_line += '\n'
+                        html += html_line
+                        if '\n' in prev_line:
+                            prev_line += html_line
+                        else:
+                            prev_line = html_line
+                    continue
 
-            html_line += fonts[line.attrib['font']]['tag']
-            subelem = list(line)
-            if subelem:
-                if subelem[0].tag == 'a':
-                    if not subelem[0].attrib['href'].startswith(export_path):
+                html_line += fonts[line.attrib['font']]['tag']
+                subelem = list(line)
+                if subelem:
+                    if subelem[0].tag == 'a':
+                        if not subelem[0].attrib['href'].startswith(export_path):
+                            html_line += \
+                                """<a href="{}">{}</a>""".format(subelem[0].attrib['href'], line_text)
+                        else:
+                            html_line += line_text
+                    elif subelem[0].tag == 'b':
                         html_line += \
-                            """<a href="{}">{}</a>""".format(subelem[0].attrib['href'], line_text)
-                    else:
-                        html_line += line_text
-                elif subelem[0].tag == 'b':
-                    html_line += \
-                        """<b>{}</b>""".format(line_text)
-                elif subelem[0].tag == 'i':
-                    html_line += \
-                        """<i>{}</i>""".format(line_text)
-            else:
-                html_line += line_text
-            html_line += fonts[line.attrib['font']]['endtag']
+                            """<b>{}</b>""".format(line_text)
+                    elif subelem[0].tag == 'i':
+                        html_line += \
+                            """<i>{}</i>""".format(line_text)
+                else:
+                    html_line += line_text
+                html_line += fonts[line.attrib['font']]['endtag']
 
-            html += html_line
-            prev_line = html_line
+                html += html_line
+                prev_line = html_line
 
         with open(export_path, 'w') as f:
             f.write(test_header + html.strip() + test_endheader)
+        os.remove(self.xml_path)
 
     def get_fonts(self):
         from font_config import font_parser
@@ -113,8 +116,10 @@ class HtmlConverter:
                 exptimgs.append({'height': img.attrib['height'],
                                  'width': img.attrib['width'],
                                  'top': img.attrib['top'],
+                                 'page': self.xml_root.find('.//image[@src="{}"]...'.format(img.attrib['src'])).attrib['number'],
                                  'src': prefix + base64.b64encode(f.read()).decode('utf-8'),
                                  'used': False})
+            os.remove(img.attrib['src'])
         return exptimgs
 
     def _convert2xml(self):

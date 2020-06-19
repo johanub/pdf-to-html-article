@@ -1,6 +1,6 @@
 from html_converter import HtmlConverter
 
-cnv = HtmlConverter('dho2.pdf')
+cnv = HtmlConverter('rapport.pdf')
 
-cnv.export_html('dho2.html')
+cnv.export_html('rapport.html')
 
