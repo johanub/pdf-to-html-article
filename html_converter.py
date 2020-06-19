@@ -124,5 +124,5 @@ class HtmlConverter:
 
     def _convert2xml(self):
         import xml.etree.ElementTree as ET
-        os.system('pdftohtml -c -xml {} {}'.format(self.pdf_path, self.xml_path))
+        print(os.system('pdftohtml -c -xml {} {}'.format(self.pdf_path, self.xml_path)))
         return ET.parse(self.xml_path).getroot()
