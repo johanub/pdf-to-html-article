@@ -1,40 +1,9 @@
 import os
 import base64
 
-test_header = """
-<html lang="da">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+test_header = """"""
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-</head>
-<body>
-<div class="row justify-content-center">
-    <div class="col-5" style="white-space: pre-wrap;max-width:800px;word-wrap: break-word">"""
-
-test_endheader = """
-
-
-</div>
-</div>
-<style>
-    h1 {
-        margin-top: 15px;
-        font-size: 30px
-    }
-    h2 {
-        margin-top: 15px;
-        font-size: 30px
-    }
-</style>
-</body>
-"""
+test_endheader = """"""
 
 
 class HtmlConverter:
@@ -50,14 +19,21 @@ class HtmlConverter:
         fonts = self.get_fonts()
         html = ''
         prev_line = ''
+        prev_top = 0
         for page in self.xml_root.iter('page'):
             for line in page.iter('text'):
                 html_line = ''
                 line_text = ''
+                same_line = False
+
+                if -25 <= int(line.attrib['top']) - prev_top <= 25:
+                    same_line = True
 
                 for img in pics:
                     if not img['used']:
+                        print(int(img['page']), int(page.attrib['number']))
                         if int(page.attrib['number']) == int(img['page']):
+                            print(int(line.attrib['top']), int(img['top']))
                             if int(line.attrib['top']) > int(img['top']):
                                 html += '<img src="{}" style="width: {}px;height: {}px">'\
                                     .format(img['src'], img['width'], img['height']) + '\n'
@@ -76,11 +52,16 @@ class HtmlConverter:
                             prev_line = html_line
                     continue
 
-                html_line += fonts[line.attrib['font']]['tag']
+                if same_line:
+                    html_line += fonts[line.attrib['font']]['tag'].replace('X', 'display: inline-block')
+                else:
+                    html_line += fonts[line.attrib['font']]['tag']
+
                 subelem = list(line)
                 if subelem:
                     if subelem[0].tag == 'a':
-                        if not subelem[0].attrib['href'].startswith(export_path):
+                        _, tail = os.path.split(export_path)
+                        if not subelem[0].attrib['href'].startswith(tail):
                             html_line += \
                                 """<a href="{}">{}</a>""".format(subelem[0].attrib['href'], line_text)
                         else:
@@ -97,10 +78,11 @@ class HtmlConverter:
 
                 html += html_line
                 prev_line = html_line
+                prev_top = int(line.attrib['top'])
 
         with open(export_path, 'w') as f:
             f.write(test_header + html.strip() + test_endheader)
-        os.remove(self.xml_path)
+        # os.remove(self.xml_path)
 
     def get_fonts(self):
         from font_config import font_parser
@@ -124,5 +106,5 @@ class HtmlConverter:
 
     def _convert2xml(self):
         import xml.etree.ElementTree as ET
-        print(os.system('pdftohtml -c -xml {} {}'.format(self.pdf_path, self.xml_path)))
+        os.system('pdftohtml -c -xml {} {}'.format(self.pdf_path, self.xml_path))
         return ET.parse(self.xml_path).getroot()
